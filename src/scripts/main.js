@@ -1,21 +1,17 @@
 'use strict';
 
-const allPopulations = document.getElementsByClassName('population');
-const total = document.getElementsByClassName('total-population');
-const average = document.getElementsByClassName('average-population');
-const populationsArr = [];
-let sum = 0;
+const allData = document.querySelectorAll('.population');
+const avarage = document.querySelector('.average-population');
+const total = document.querySelector('.total-population');
 
-for (const population of allPopulations) {
-  populationsArr.push(+population.textContent.replaceAll(',', ''));
-}
+const allDataToNum = [];
 
-sum = populationsArr.reduce((accum, pop) => accum + pop);
+allData.forEach((country) => {
+  allDataToNum.push(Number(country.textContent.replace(/,/g, '')));
+});
 
-const averageValue = Math.floor(sum / populationsArr.length);
+const totalValue = allDataToNum.reduce((sum, value) => sum + value, 0);
+const averageValue = totalValue / allDataToNum.length;
 
-total[0].textContent = sum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-
-average[0].textContent = averageValue
-  .toString()
-  .replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+total.textContent = totalValue.toLocaleString();
+avarage.textContent = averageValue.toLocaleString();
